@@ -1,0 +1,7 @@
+initial update
+
+# Conflicts:
+#	package-lock.json
+#	src/components/DashboardPreview.tsx
+#	src/components/Footer.tsx
+#	src/components/InvestorCarousel.tsx

@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Deep luxury black theme */
+    --background: 0 0% 1.2%;
+    --foreground: 0 0% 100%;
+
+    /* Card glassmorphism */
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
+
+    /* Indigo primary */
+    --primary: 239 84% 67%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Rose secondary */
+    --secondary: 351 95% 71%;
+    --secondary-foreground: 0 0% 0%;
+
+    /* Muted glass effect */
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 65%;
+
+    /* Cyan accent */
+    --accent: 189 94% 43%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Violet for tertiary */
+    --violet: 270 91% 65%;
+
+    /* Gold for premium text */
+    --gold: 45 93% 65%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 239 84% 67%;
+
+    --radius: 1rem;
+
+    /* Luxury Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%), hsl(351 95% 71%), hsl(239 84% 67%));
+    --gradient-indigo-rose: linear-gradient(135deg, hsl(239 84% 67%), hsl(351 95% 71%));
+    --gradient-rose-violet: linear-gradient(135deg, hsl(351 95% 71%), hsl(270 91% 65%));
+    --gradient-cyan-indigo: linear-gradient(135deg, hsl(189 94% 43%), hsl(239 84% 67%));
+    --gradient-gold: linear-gradient(135deg, hsl(45 93% 65%), hsl(30 100% 60%));
+    
+    /* Soft Glow effects */
+    --glow-indigo: 0 0 30px hsl(239 84% 67% / 0.4), 0 0 60px hsl(239 84% 67% / 0.2);
+    --glow-rose: 0 0 30px hsl(351 95% 71% / 0.4), 0 0 60px hsl(351 95% 71% / 0.2);
+    --glow-cyan: 0 0 30px hsl(189 94% 43% / 0.4), 0 0 60px hsl(189 94% 43% / 0.2);
+    --glow-violet: 0 0 30px hsl(270 91% 65% / 0.4), 0 0 60px hsl(270 91% 65% / 0.2);
+
+    /* Transitions */
+    --transition-smooth: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-gradient-hero {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .text-gradient-indigo {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .glass-card {
+    @apply bg-card/30 backdrop-blur-xl border border-white/10 rounded-2xl;
+  }
+
+  .glass-badge {
+    @apply bg-white/5 backdrop-blur-md border border-white/20 rounded-full;
+  }
+
+  .glow-indigo {
+    box-shadow: var(--glow-indigo);
+  }
+
+  .glow-rose {
+    box-shadow: var(--glow-rose);
+  }
+
+  .glow-cyan {
+    box-shadow: var(--glow-cyan);
+  }
+
+  .glow-violet {
+    box-shadow: var(--glow-violet);
+  }
+
+  .neon-border-indigo {
+    @apply border-2 border-primary;
+    box-shadow: 0 0 15px hsl(239 84% 67% / 0.5), inset 0 0 10px hsl(239 84% 67% / 0.2);
+  }
+
+  .neon-border-cyan {
+    @apply border-2 border-accent;
+    box-shadow: 0 0 15px hsl(189 94% 43% / 0.5), inset 0 0 10px hsl(189 94% 43% / 0.2);
+  }
+}
+/* Hide scrollbars but keep scrolling */
+.no-scrollbar::-webkit-scrollbar { display: none; }  /* Chrome/Safari */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } /* Edge/IE, Firefox */

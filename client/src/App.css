@@ -1,0 +1,12 @@
+/* Scrollbar hide utility for carousel */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+/* Hide scrollbars but keep scrolling */
+.no-scrollbar::-webkit-scrollbar { display: none; }  /* Chrome/Safari */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } /* Edge/IE, Firefox */
