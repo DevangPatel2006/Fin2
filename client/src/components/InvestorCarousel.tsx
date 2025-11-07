@@ -2,41 +2,110 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+// ✅ Helper to try multiple image sources gracefully
+function useFallback(images: string[]) {
+  const [i, setI] = useState(0);
+  return {
+    src: images[i],
+    onError: () => {
+      if (i < images.length - 1) setI(i + 1);
+    },
+  };
+}
+
 const investors = [
+  // -------- Investing (2) --------
   {
     name: "Warren Buffett",
     title: "CEO, Berkshire Hathaway",
+    area: "Investing",
     quote:
-      "Do not save what is left after spending, but spend what is left after saving.",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop",
+      "The stock market is a device for transferring money from the impatient to the patient.",
+    images: [
+      "https://upload.wikimedia.org/wikipedia/commons/5/50/Warren_Buffett_KU_Visit.jpg",
+      "https://en.wikipedia.org/wiki/Special:FilePath/Warren_Buffett_KU_Visit.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Warren_Buffett_KU_Visit.jpg",
+    ],
   },
   {
-    name: "Ray Dalio",
-    title: "Founder, Bridgewater Associates",
-    quote: "He who lives by the crystal ball will eat shattered glass.",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
+    name: "Vijay Kedia",
+    title: "Indian Stock Market Investor",
+    area: "Investing",
+    quote: "Your investment success depends on your ability to handle losses.",
+    images: [
+      "https://upload.wikimedia.org/wikipedia/commons/2/2a/Vijay_Kedia.jpg",
+      "https://en.wikipedia.org/wiki/Special:FilePath/Vijay_Kedia.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Vijay_Kedia.jpg",
+    ],
   },
+
+  // -------- Money Management (2) --------
   {
-    name: "Charlie Munger",
-    title: "Vice Chairman, Berkshire Hathaway",
+    name: "Dave Ramsey",
+    title: "Personal Finance Coach",
+    area: "Money Management",
     quote:
-      "The big money is not in the buying and selling, but in the waiting.",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop",
+      "A budget is telling your money where to go instead of wondering where it went.",
+    images: [
+      "https://upload.wikimedia.org/wikipedia/commons/e/e7/Dave_Ramsey.jpg",
+      "https://en.wikipedia.org/wiki/Special:FilePath/Dave_Ramsey.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Dave_Ramsey.jpg",
+    ],
   },
   {
-    name: "Jack Bogle",
-    title: "Founder, Vanguard Group",
-    quote: "Time is your friend; impulse is your enemy.",
-    image:
-      "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop",
+    name: "Suze Orman",
+    title: "Financial Advisor & Author",
+    area: "Money Management",
+    quote: "You can't build wealth if you don't control your spending.",
+    images: [
+      "https://upload.wikimedia.org/wikipedia/commons/8/8c/Suze_Orman_2014.jpg",
+      "https://en.wikipedia.org/wiki/Special:FilePath/Suze_Orman_2014.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Suze_Orman_2014.jpg",
+    ],
+  },
+
+  // -------- Goals / Discipline (3) --------
+  {
+    name: "James Clear",
+    title: "Author of Atomic Habits",
+    area: "Goal Building",
+    quote:
+      "You do not rise to the level of your goals. You fall to the level of your systems.",
+    images: [
+      "https://upload.wikimedia.org/wikipedia/commons/0/0e/James_Clear.png",
+      "https://en.wikipedia.org/wiki/Special:FilePath/James_Clear.png",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/James_Clear.png",
+    ],
+  },
+  {
+    name: "Naval Ravikant",
+    title: "Entrepreneur & Philosopher",
+    area: "Goal Building",
+    quote:
+      "Desire is a contract you make with yourself to be unhappy until you get what you want.",
+    images: [
+      "https://upload.wikimedia.org/wikipedia/commons/c/c3/Naval_Ravikant_Headshot.jpg",
+      "https://en.wikipedia.org/wiki/Special:FilePath/Naval_Ravikant_Headshot.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Naval_Ravikant_Headshot.jpg",
+    ],
+  },
+  {
+    name: "Nithin Kamath",
+    title: "Founder, Zerodha",
+    area: "Goal Building",
+    quote: "Consistency beats motivation.",
+    images: [
+      "https://upload.wikimedia.org/wikipedia/commons/8/8b/Nithin_Kamath_in_2023.jpg",
+      "https://en.wikipedia.org/wiki/Special:FilePath/Nithin_Kamath_in_2023.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Nithin_Kamath_in_2023.jpg",
+    ],
   },
 ];
 
 export default function InvestorCarousel() {
   const [index, setIndex] = useState(0);
+  const current = investors[index];
+  const fallback = useFallback(current.images);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,8 +113,6 @@ export default function InvestorCarousel() {
     }, 4000);
     return () => clearInterval(interval);
   }, []);
-
-  const current = investors[index];
 
   return (
     <section className="py-20 relative overflow-hidden border-y border-primary/10">
@@ -59,7 +126,8 @@ export default function InvestorCarousel() {
           Wisdom from <span className="text-gradient-indigo">Financial Legends</span>
         </motion.h2>
 
-        <div className="relative h-[260px] flex items-center justify-center">
+        <div className="relative min-h-[320px] flex items-center justify-center py-6 md:py-10">
+
           <AnimatePresence mode="wait">
             <motion.div
               key={current.name}
@@ -71,7 +139,7 @@ export default function InvestorCarousel() {
             >
               <div className="flex flex-col items-center gap-4">
                 <Avatar className="w-20 h-20 border-2 border-primary/50">
-                  <AvatarImage src={current.image} alt={current.name} />
+                  <AvatarImage src={fallback.src} onError={fallback.onError} />
                   <AvatarFallback>
                     {current.name
                       .split(" ")
