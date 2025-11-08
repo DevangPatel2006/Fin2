@@ -90,7 +90,7 @@ export default function Footer(): JSX.Element {
           {/* Copyright */}
           <div className="text-xs sm:text-sm text-muted-foreground space-y-2 pb-4">
             <p>
-              © {new Date().getFullYear()} FinAIssist — Educational use only
+              © {new Date().getFullYear()} FinLanza — Educational use only
             </p>
           </div>
         </motion.div>
