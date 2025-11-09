@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 
 const benefits = [
   'Real-time spending insights with AI analysis',
+  'AI tax planning that grows your savings',
   'Smart budgeting that adapts to your lifestyle',
   'Personalized investment recommendations',
   'Automated savings goals tracking',
@@ -57,7 +58,7 @@ export default function DashboardPreview() {
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="bg-muted/50 p-4 rounded-lg">
                   <p className="text-xs text-muted-foreground mb-1">Total Balance</p>
-                  <p className="text-2xl font-bold text-gradient-gold">₹2,45,890</p>
+                  <p className="text-2xl font-bold text-gradient-gold">₹45,890</p>
                 </div>
                 <div className="bg-muted/50 p-4 rounded-lg">
                   <p className="text-xs text-muted-foreground mb-1">This Month</p>

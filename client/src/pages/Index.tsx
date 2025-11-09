@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Sparkles, TrendingUp, Brain, MessageCircle } from 'lucide-react';
+import { Sparkles, TrendingUp, Brain, MessageCircle, IndianRupee } from 'lucide-react';
 import LuxuryHero from '@/components/LuxuryHero';
 import InvestorCarousel from '@/components/InvestorCarousel';
 import FeatureCard from '@/components/FeatureCard';
@@ -14,9 +14,9 @@ const features = [
     description: 'Understand every rupee with intelligent categorization and insights that reveal your true spending patterns.',
   },
   {
-    icon: TrendingUp,
-    title: 'Forecast Your Financial Future',
-    description: 'AI-powered predictions help you visualize where your money will be in 6 months, 1 year, or 5 years.',
+    icon: IndianRupee,
+    title: 'Optimize Your Taxes Smartly',
+    description: 'AI-powered tax insights help you forecast your liabilities, deductions, and savings opportunities — so you keep more of what you earn.',
   },
   {
     icon: Brain,
