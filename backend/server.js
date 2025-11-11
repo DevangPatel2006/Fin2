@@ -8,6 +8,7 @@ import goalRoutes from './routes/goalRoutes.js';
 import chatRoutes from "./routes/chatRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
 import taxRoutes from "./routes/taxRoutes.js"; // NEW
+import settingsRoutes from "./routes/settingsRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -23,6 +24,8 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/tax", taxRoutes); // NEW
 
+// ADD THIS ROUTE:
+app.use("/api/settings", settingsRoutes);
 app.get("/", (req, res) => {
   res.send("API running successfully");
 });
