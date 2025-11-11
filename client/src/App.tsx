@@ -15,7 +15,11 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AIChat from "./pages/AIChat";
-
+import HelpCenter from "./pages/HelpCenter";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ContactUs from "./pages/ContactUs";
+import AboutUs from "./pages/AboutUs";
+import Terms from "./pages/Terms";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -43,6 +47,11 @@ const App = () => (
 
           <Route path="/insights" element={<Insights />} />
           <Route path="/settings" element={<Settings />} />
+             <Route path="/help" element={<HelpCenter />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
