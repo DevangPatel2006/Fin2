@@ -15,7 +15,7 @@ import DashboardLayout from "@/components/DashboardLayout";
 import axios from "axios";
 
 // 🧠 Backend API instance
-const API = axios.create({ baseURL: "http://localhost:5000/api" });
+const API = axios.create({ baseURL: "https://finlanza-backend1.onrender.com/api" });
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
   if (token) req.headers.Authorization = `Bearer ${token}`;
@@ -25,22 +25,25 @@ API.interceptors.request.use((req) => {
 export default function Dashboard() {
   const [user, setUser] = useState<{ name?: string } | null>(null);
   const [transactions, setTransactions] = useState<any[]>([]);
+  const [goals, setGoals] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 🧠 Fetch user + transactions
+  // 🧠 Fetch user + transactions + goals
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        // Fetch user info
-        const userRes = await API.get("/auth/me");
-        setUser(userRes.data);
+        const [userRes, txnRes, goalRes] = await Promise.all([
+          API.get("/auth/me"),
+          API.get("/transactions/my"),
+          API.get("/goals/my"),
+        ]);
 
-        // Fetch transactions
-        const txnRes = await API.get("/transactions/my");
+        setUser(userRes.data);
         setTransactions(txnRes.data);
+        setGoals(goalRes.data);
       } catch (err) {
         console.error("Failed to fetch dashboard data:", err);
       } finally {
@@ -212,26 +215,74 @@ export default function Dashboard() {
             )}
           </motion.div>
 
-          {/* Goals Progress (static for now) */}
+          {/* ✅ Goals Section (Fully Dynamic + Safe) */}
+          {/* ✅ Goals Section (Dynamic, now matches your schema) */}
+<motion.div
+  initial={{ opacity: 0, x: 20 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ delay: 0.3 }}
+  className="glass-card p-6"
+>
+  <div className="flex items-center justify-between mb-6">
+    <h2 className="text-xl font-semibold text-foreground">Goals</h2>
+    <Link to="/add-goal">
+      <Button variant="ghost" size="sm">
+        <Plus className="w-4 h-4" />
+      </Button>
+    </Link>
+  </div>
+
+  {goals.length === 0 ? (
+    <p className="text-muted-foreground text-sm">
+      You have no goals yet. Add one to start tracking 🚀
+    </p>
+  ) : (
+    <div className="space-y-4">
+      {goals.slice(0, 3).map((goal, index) => {
+        const saved = parseFloat(goal.current) || 0;
+        const target = parseFloat(goal.target) || 0;
+        const progress =
+          target > 0 ? Math.min((saved / target) * 100, 100) : 0;
+
+        return (
           <motion.div
+            key={goal._id}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="glass-card p-6"
+            transition={{ delay: 0.4 + index * 0.1 }}
+            className="p-4 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors"
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-foreground">Goals</h2>
-              <Link to="/add-goal">
-                <Button variant="ghost" size="sm">
-                  <Plus className="w-4 h-4" />
-                </Button>
-              </Link>
+            <div className="flex justify-between items-center mb-1">
+              <p className="font-medium text-foreground capitalize">
+                {goal.name}
+              </p>
+              <span className="text-sm text-muted-foreground">
+                {progress.toFixed(1)}%
+              </span>
             </div>
 
-            <p className="text-muted-foreground text-sm">
-              Add your savings goals to track progress here soon 🚀
+           {/* Progress bar with Finlanza gradient */}
+<div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+  <motion.div
+    initial={{ width: 0 }}
+    animate={{ width: `${progress}%` }}
+    transition={{ duration: 0.8, ease: "easeOut" }}
+    className="h-2 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 shadow-[0_0_10px_#d946ef80]"
+  ></motion.div>
+</div>
+
+
+            {/* Saved vs Target */}
+            <p className="text-xs text-muted-foreground mt-1">
+              ₹{saved.toLocaleString()} / ₹{target.toLocaleString()}
             </p>
           </motion.div>
+        );
+      })}
+    </div>
+  )}
+</motion.div>
+
         </div>
       </div>
     </DashboardLayout>

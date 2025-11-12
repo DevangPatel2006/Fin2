@@ -8,7 +8,7 @@ import DashboardLayout from '@/components/DashboardLayout';
 import axios from 'axios';
 
 // ✅ Backend API setup with token
-const API = axios.create({ baseURL: 'http://localhost:5000/api' });
+const API = axios.create({ baseURL: "https://finlanza-backend1.onrender.com/api" });
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem('token');
   if (token) req.headers.Authorization = `Bearer ${token}`;

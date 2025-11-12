@@ -1,9 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api/auth", // change to your backend URL if deployed
+  baseURL: "https://finlanza-backend1.onrender.com/api/auth", // change to your backend URL if deployed
 });
-
 export const signup = (formData: {
   name: string;
   email: string;

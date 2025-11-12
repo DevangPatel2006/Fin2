@@ -60,7 +60,7 @@ export default function AIChat() {
         return null;
       }
 
-      const res = await fetch("http://localhost:5000/api/ai/summary", {
+      const res = await fetch("https://finlanza-backend1.onrender.com/api/ai/summary", {
         method: "GET",
         headers: { 
           "Content-Type": "application/json", 
@@ -144,7 +144,7 @@ export default function AIChat() {
       }
 
       // Send to AI with full context
-      const aiRes = await fetch("http://localhost:5000/api/chat", {
+      const aiRes = await fetch("https://finlanza-backend1.onrender.com/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
