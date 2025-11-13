@@ -33,7 +33,7 @@ export default function LuxuryHero() {
           className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight tracking-tight"
         >
           <span className="block text-foreground mb-2">
-            Your Personal AI
+            Your Personal 
           </span>
           <span className="block text-gradient-hero">
             Finance Coach
