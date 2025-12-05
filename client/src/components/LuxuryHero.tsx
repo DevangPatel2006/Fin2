@@ -57,8 +57,7 @@ export default function LuxuryHero() {
           transition={{ duration: 1, delay: 0.6 }}
           className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-light"
         >
-          Crafting exceptional financial experiences through calm intelligence
-          and cutting-edge technology.
+         
         </motion.p>
 
         {/* CTA Buttons */}
