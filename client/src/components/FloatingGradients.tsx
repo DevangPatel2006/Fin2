@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 const shapes = [
   {
@@ -44,19 +45,34 @@ const shapes = [
 ];
 
 export default function FloatingGradients() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if mobile on mount
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    
+    // Optional: listen to resize
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Reduce shapes and disable animations on mobile
+  const displayShapes = isMobile ? shapes.slice(0, 2) : shapes;
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {shapes.map((shape) => (
+      {displayShapes.map((shape) => (
         <motion.div
           key={shape.id}
           className={`absolute ${shape.size} ${shape.position} bg-gradient-radial ${shape.gradient} rounded-full blur-3xl opacity-50`}
-          animate={{
+          animate={isMobile ? {} : {
             y: [0, -30, 0],
             x: [0, 15, 0],
             scale: [1, 1.1, 1],
             opacity: [0.3, 0.5, 0.3],
           }}
-          transition={{
+          transition={isMobile ? {} : {
             duration: shape.duration,
             delay: shape.delay,
             repeat: Infinity,
