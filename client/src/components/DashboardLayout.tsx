@@ -1,3 +1,4 @@
+// client/src/components/DashboardLayout.tsx
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Home, Wallet, Target, Settings, TrendingUp, Plus, Menu, X, HelpCircle, Bot } from 'lucide-react';
@@ -96,11 +97,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </main>
 
       {/* Floating Action Button */}
-      <Link to="/aichatbot" className="fixed bottom-6 right-6 z-40">
-        <Button variant="luxury" size="icon" className="w-14 h-14 rounded-full glow-cyan">
-          <Bot className="w-6 h-6" />
-        </Button>
-      </Link>
+      {location.pathname !== '/aichatbot' && (
+        <Link to="/aichatbot" className="fixed bottom-6 right-6 z-40">
+          <Button variant="luxury" size="icon" className="w-14 h-14 rounded-full glow-cyan">
+            <Bot className="w-6 h-6" />
+          </Button>
+        </Link>
+      )}
     </div>
   );
 }
