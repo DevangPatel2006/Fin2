@@ -62,7 +62,7 @@ const HelpCenter = () => {
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Everything you need to know about our platform, privacy, and how
-              we handle your financial data
+              we handle your financial data.
             </p>
           </motion.div>
         </div>
