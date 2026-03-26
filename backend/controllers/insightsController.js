@@ -2,6 +2,7 @@
 // backend/controllers/insightsController.js
 import Transaction from "../models/transactionModel.js";
 import Goal from "../models/goalModel.js";
+import logger from "../config/logger.js";
 
 /**
  * Get start and end dates for current and previous month
@@ -234,7 +235,7 @@ const investmentInsight = {
     });
 
   } catch (err) {
-    console.error('Insights error:', err);
+    logger.error('Insights error:', err);
     res.status(500).json({
       status: 'ERROR',
       message: 'Failed to generate insights',

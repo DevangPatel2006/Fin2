@@ -1,6 +1,7 @@
 // backend/routes/chatRoutes.js
 import express from "express";
 import dotenv from "dotenv";
+import geminiCircuitBreaker from "../config/circuitBreaker.js";
 dotenv.config();
 
 const router = express.Router();
@@ -146,7 +147,7 @@ USER'S QUESTION:
 RESPOND NOW (Max 6 lines):
 `;
 
-    const response = await fetch(
+    const data = await geminiCircuitBreaker.fire(
       `https://generativelanguage.googleapis.com/v1/${MODEL}:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
         method: "POST",
@@ -156,8 +157,6 @@ RESPOND NOW (Max 6 lines):
         }),
       }
     );
-
-    const data = await response.json();
     const text =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "⚠️ Unable to process your request right now.";

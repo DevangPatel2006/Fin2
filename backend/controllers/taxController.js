@@ -1,5 +1,6 @@
 import Transaction from "../models/transactionModel.js";
 import Goal from "../models/goalModel.js";
+import logger from "../config/logger.js";
 
 const OLD_REGIME_SLABS = [
   { min: 0, max: 250000, rate: 0 },
@@ -262,7 +263,7 @@ export const analyzeTaxSavings = async (req, res) => {
     });
 
   } catch (err) {
-    console.error("Tax analysis error:", err);
+    logger.error("Tax analysis error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };

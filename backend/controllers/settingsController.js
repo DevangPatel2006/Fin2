@@ -1,5 +1,6 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
+import logger from "../config/logger.js";
 
 export const updateProfile = async (req, res) => {
   try {
@@ -24,7 +25,7 @@ export const updateProfile = async (req, res) => {
 
     res.json({ success: true, user, message: "Profile updated successfully" });
   } catch (err) {
-    console.error("Update profile error:", err);
+    logger.error("Update profile error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
@@ -60,7 +61,7 @@ export const changePassword = async (req, res) => {
 
     res.json({ success: true, message: "Password changed successfully" });
   } catch (err) {
-    console.error("Change password error:", err);
+    logger.error("Change password error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
@@ -97,7 +98,7 @@ export const deleteAccount = async (req, res) => {
 
     res.json({ success: true, message: "Account deleted successfully" });
   } catch (err) {
-    console.error("Delete account error:", err);
+    logger.error("Delete account error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };

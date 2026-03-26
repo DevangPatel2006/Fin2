@@ -1,6 +1,8 @@
 // backend/controllers/aiController.js
 import Transaction from "../models/transactionModel.js";
 import Goal from "../models/goalModel.js";
+import logger from "../config/logger.js";
+import redisClient from "../config/redis.js";
 
 function categorize(desc = "") {
   const d = String(desc).toLowerCase();
@@ -25,6 +27,17 @@ function ym(date) {
 export const getAISummary = async (req, res) => {
   try {
     const userId = req.user._id;
+
+    if (redisClient) {
+      try {
+        const cachedData = await redisClient.get(`ai_summary_${userId}`);
+        if (cachedData) {
+          return res.json(JSON.parse(cachedData));
+        }
+      } catch (redisErr) {
+        logger.error('Redis cache hit error:', redisErr.message);
+      }
+    }
 
     const transactions = await Transaction.find({ userId }).sort({ date: -1 });
     const goals = await Goal.find({ userId });
@@ -138,7 +151,7 @@ export const getAISummary = async (req, res) => {
     const monthlyInvestable = Math.max(incomeTotal - expenseTotal - 
       goals.reduce((sum, g) => sum + (g.monthlyContribution || 0), 0), 0);
 
-    res.json({
+    const responseData = {
       success: true,
       summary: {
         totalTransactions: transactions.length,
@@ -158,9 +171,19 @@ export const getAISummary = async (req, res) => {
       },
       goals: goalProgress,
       transactions: transactions.slice(0, 10), // Last 10 for context
-    });
+    };
+
+    if (redisClient) {
+      try {
+        await redisClient.set(`ai_summary_${userId}`, JSON.stringify(responseData), 'EX', 300);
+      } catch (redisErr) {
+        logger.error('Redis cache set error:', redisErr.message);
+      }
+    }
+
+    res.json(responseData);
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };

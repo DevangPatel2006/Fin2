@@ -51,4 +51,6 @@ const goalSchema = new mongoose.Schema({
   }
 });
 
+goalSchema.index({ userId: 1, createdAt: -1 });
+
 export default mongoose.model('Goal', goalSchema);
