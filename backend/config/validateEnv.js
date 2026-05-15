@@ -1,7 +1,8 @@
 import logger from './logger.js';
 
 const validateEnv = () => {
-  const { MONGO_URI, JWT_SECRET, PORT, GEMINI_API_KEY, REDIS_URL } = process.env;
+  const { MONGO_URI, JWT_SECRET, PORT, GEMINI_API_KEY } = process.env;
+  // const { REDIS_URL } = process.env;
   
   if (!MONGO_URI) {
     throw new Error('FATAL ERROR: MONGO_URI is not defined in environment variables');
@@ -19,9 +20,9 @@ const validateEnv = () => {
     logger.warn('WARNING: GEMINI_API_KEY is not defined. AI features may not work properly');
   }
   
-  if (!REDIS_URL) {
-    logger.warn('WARNING: REDIS_URL is not defined. Running without Redis cache');
-  }
+  // if (!REDIS_URL) {
+  //   logger.warn('WARNING: REDIS_URL is not defined. Running without Redis cache');
+  // }
 };
 
 export default validateEnv;
